@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from sc2statistics import load_all, load_replay
+from sc2statistics.loader import load_all, load_replay
 
 
 def test_load_dir():
@@ -11,4 +11,6 @@ def test_load_dir():
 
 def test_load_replay():
     for name in load_all('./tests/assets'):
-        assert load_replay(name)
+        r = load_replay(name)
+        assert 'tracker_events' in r
+        assert 'details' in r
