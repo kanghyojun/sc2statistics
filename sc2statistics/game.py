@@ -11,7 +11,6 @@ def tracker_events(event):
             d = args and args[0] or kwargs['replay_data']
             filtered = []
             player_id = kwargs.get('player_id', None)
-            print d['tracker_events']
             for item in d['tracker_events']:
                 if (item['_event'] == event and player_id is None or
                         player_id == item.get('m_controlPlayerId', -1)):

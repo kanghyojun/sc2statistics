@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from sc2statistics.game import get_build, get_unit
-from sc2statistics.loader import load_all, load_replay
 
 
 def test_get_build(f_replay_data):
