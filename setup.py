@@ -15,6 +15,7 @@ setup(name='sc2statistics',
       author_email='hyojun@admire.kr',
       install_requires=[
           'alask == 0.0.1',
-          'mpyq', 's2protocol == 0.0.0admire'
+          'mpyq', 's2protocol == 0.0.0admire',
+          'humanize == 0.5'
       ],
       dependency_links=dependencies)
