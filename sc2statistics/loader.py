@@ -64,4 +64,4 @@ def load_replay(replay_name):
         logger = get_logger()
         logger.error('s2protocol(%s) not found.'
                      'check out version of s2protocol.' % e.message)
-    return {'tracker_events': r, 'details': detail}
+    return {'tracker_events': tuple(r), 'details': detail}
