@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from functools import wraps
 
-__all__ ='get_build', 'get_unit'
+__all__ ='get_build', 'get_unit', 'get_player',
 
 
 S2_TIME_CORR_VAL = 1/1.6
@@ -37,3 +37,14 @@ def get_unit(replay_data, player_id=None):
         yield {'born_at': v['_gameloop'] * S2_TIME_CORR_VAL,
                'name': v['m_unitTypeName'],
                'player_id': v['m_controlPlayerId']}
+
+
+def get_player(replay_data):
+    r = {}
+    for item in replay_data['details']['m_playerList']:
+        r[item['m_teamId']] = {
+            'name': item['m_name'],
+            'race': item['m_race'],
+            'color': item['m_color'],
+        }
+    return r

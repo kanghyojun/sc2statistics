@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from sc2statistics.game import get_build, get_unit
+from sc2statistics.game import get_build, get_unit, get_player
 
 
 def test_get_build(f_replay_data):
@@ -18,3 +18,11 @@ def test_get_unit(f_replay_data):
     assert unit_by_player1
     for item in unit_by_player1:
         assert 1 == item['player_id']
+
+
+def test_get_player(f_replay_data):
+    player = get_player(f_replay_data)
+    assert player
+    assert 'name' in player[0]
+    assert 'race' in player[0]
+    assert 'color' in player[0]
