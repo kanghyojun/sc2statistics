@@ -17,3 +17,4 @@ def test_upload_replay(f_replay):
     json_ = json.loads(r.data)
     print json_
     assert 'build' in json_
+    assert 'player' in json_
