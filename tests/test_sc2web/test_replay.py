@@ -15,6 +15,5 @@ def test_upload_replay(f_replay):
                 data={'replay': f})
     assert 200 == r.status_code
     json_ = json.loads(r.data)
-    assert 'build' in json_
     print json_
-    assert False
+    assert 'build' in json_
