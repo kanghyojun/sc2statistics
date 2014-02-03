@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block htmltitle -%}{%- endblock %}</title>
+  </head>
+  <body>
+    {% block htmlbody %}
+    {% endblock %}
+    <script type="text/javascript"
+            src="{{ url_for('static', filename='jquery/jquery.min.js') }}">
+    </script>
+    <script type="text/javascript"
+            src="{{ url_for('static', filename='d3js/build/d3.v3.min.js') }}">
+    </script>
+    <script type="text/javascript"
+            src="{{ url_for('static', filename='riotjs/riot.min.js') }}">
+    </script>
+    <script type="text/javascript"
+            src="{{ url_for('static', filename='js/api.js') }}">
+    </script>
+  </body>
+</html>

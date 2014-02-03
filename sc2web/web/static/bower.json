@@ -1,0 +1,23 @@
+{
+  "name": "sc2web_static",
+  "version": "0.0.0",
+  "homepage": "https://github.com/admire93/sc2statistics",
+  "authors": [
+    "Kang Hyojun <hyojun@admire.kr>"
+  ],
+  "main": "main.js",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "riotjs": "*",
+    "jquery": "~1.10.2",
+    "d3js": "*"
+  }
+}

@@ -1,15 +1,17 @@
-from flask import current_app
+# -*- coding: utf-8 -*-
+from flask import current_app, g
 from alembic.config import Config
 from alembic.script import ScriptDirectory
 from werkzeug.local import LocalProxy
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, scoped_session
+from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
 __all__ = ('Base', 'ensure_shutdown_session', 'get_engine', 'get_session',
            'get_alembic_config')
 
 Base = declarative_base()
+Session = sessionmaker()
 
 def get_alembic_config(engine):
     if engine is not None:
@@ -25,13 +27,13 @@ def get_alembic_config(engine):
 
 
 def ensure_shutdown_session(app):
-    def remove_or_rollback(exc=None):
-        if not exc:
-            session.remove()
-        else:
-            session.rollback()
+    def rollback_close(exc=None):
+        if hasattr(g, 'sess'):
+            if exc:
+                g.sess.rollback()
+            g.sess.close()
 
-    app.teardown_appcontext(remove_or_rollback)
+    app.teardown_appcontext(rollback_close)
 
 
 def get_engine(app=None):
@@ -40,12 +42,11 @@ def get_engine(app=None):
         return create_engine(app.config.get('DATABASE_URL', None))
 
 
-def get_session():
-    app = current_app
-    sess = scoped_session(sessionmaker(bind=get_engine(),
-                                       autocommit=False,
-                                       autoflush=False))
-    return sess
-
+def get_session(engine=None):
+    if not engine:
+        engine = get_engine()
+    if not hasattr(g, 'sess'):
+        setattr(g, 'sess', Session(bind=engine))
+    return getattr(g, 'sess')
 
 session = LocalProxy(get_session)

@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+
+{% block htmlbody %}
+  <form method="POST" action="{{ url_for('analyze_replays') }}">
+    <input type="file" name="replay" />
+  </form>
+{% endblock %}
