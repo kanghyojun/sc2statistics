@@ -23,7 +23,7 @@ class Replay(Base):
 
     __tablename__ = 'replays'
 
-    id = Column(Unicode, primary_key=True, default=ordered_hash())
+    id = Column(Unicode, primary_key=True, default=ordered_hash)
 
     build = Column(UnicodeText, nullable=False)
 
