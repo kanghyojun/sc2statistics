@@ -12,5 +12,10 @@ def test_replay_model(f_session):
     f_session.add(rp)
     f_session.commit()
     assert rp.id
-    print rp.id
-    assert False
+    rp2 = f_session.query(Replay)\
+          .filter(Replay.id == rp.id)\
+          .first()
+    assert rp2
+    assert rp.id == rp2.id
+    assert rp.build == rp2.build
+    assert rp.unit == rp2.unit

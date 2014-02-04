@@ -7,7 +7,7 @@ from .util import url_for
 
 
 def test_upload_replay(f_replay):
-    url = url_for('analyze_replay')
+    url = url_for('analyze_replays')
     with app.test_client() as c, f_replay as f:
         r = c.post(
                 url,
