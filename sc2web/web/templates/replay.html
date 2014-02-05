@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
 {% block htmlbody %}
-  <form method="POST" action="{{ url_for('analyze_replays') }}">
+  <form method="POST" action="{{ url_for('analyze_replays') }}" enctype="multipart/form-data">
     <input type="file" name="replay" />
+    <button>보내기</button>
   </form>
 {% endblock %}

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask import (Flask, request, jsonify, render_template, redirect,
-                   url_for, json)
+                   url_for, json, abort)
 from sqlalchemy.exc import IntegrityError
 
 from sc2statistics.loader import load_replay
@@ -19,9 +19,13 @@ def analyze_replays():
     if replay_file is None:
         abort(400)
     replay_data = load_replay(replay_file)
+    if not replay_data:
+        abort(400)
     build = get_build(replay_data)
     player = get_player(replay_data)
     unit = get_unit(replay_data)
+    if not build or not player or not unit:
+        abort(400)
     replay = Replay(build=json.dumps(list(build)),
                     player=json.dumps(list(player)),
                     unit=json.dumps(list(unit)))
@@ -39,7 +43,12 @@ def replays():
 
 
 @app.route('/analyze_replays/<string:replay_id>/', methods=['GET'])
-def get_analyzed_replay():
+def get_analyzed_replay(replay_id):
+    replay = session.query(Replay)\
+             .filter(Replay.id == replay_id)\
+             .first()
+    if not replay:
+        abort(404)
     return ''
 
 
