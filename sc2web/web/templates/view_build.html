@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+
+{% block htmlbody %}
+<table>
+  <caption>
+    플레이어 정보
+  </caption>
+  <thead>
+    <th>#</th>
+    <th>아이디</th>
+    <th>종족</th>
+  </thead>
+  <tbody>
+    {% for k, v in player.iteritems(): -%}
+      <tr>
+      <td>{{ k }}</td>
+      <td>{{ v['name'] }}</td>
+      <td>{{ v['race'] }}</td>
+      </tr>
+    {%- endfor %}
+  </tbody>
+</table>
+{% for k, v in build: -%}
+  <table>
+    <caption>
+      {{ k }}
+    </caption>
+    <thead>
+      <th>시간</th>
+      <th>건물이름</th>
+    </thead>
+    <tbody>
+      {% for b in v: -%}
+        <tr>
+          <td>
+            {{ b['built_at'] }}
+          </td>
+          <td>
+            {{ b['name'] }}
+          </td>
+        </tr>
+      {%- endfor %}
+    </tbody>
+  </table>
+{%- endfor %}
+{% endblock %}

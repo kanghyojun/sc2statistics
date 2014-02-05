@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from itertools import groupby
+
 from flask import (Flask, request, jsonify, render_template, redirect,
                    url_for, json, abort)
 from sqlalchemy.exc import IntegrityError
@@ -27,7 +29,7 @@ def analyze_replays():
     if not build or not player or not unit:
         abort(400)
     replay = Replay(build=json.dumps(list(build)),
-                    player=json.dumps(list(player)),
+                    player=json.dumps(player),
                     unit=json.dumps(list(unit)))
     session.add(replay)
     try:
@@ -49,7 +51,16 @@ def get_analyzed_replay(replay_id):
              .first()
     if not replay:
         abort(404)
-    return ''
+    try:
+        build = json.loads(replay.build)
+        unit = json.loads(replay.unit)
+        player = json.loads(replay.player)
+    except:
+        abort(500)
+    build_by_player = groupby(sorted(build, key=lambda x: x['player_id']),
+                              key=lambda x: x['player_id'])
+    return render_template('view_build.html',
+                           player=player, build=build_by_player)
 
 
 ensure_shutdown_session(app)
