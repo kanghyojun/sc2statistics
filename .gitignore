@@ -39,3 +39,6 @@ nosetests.xml
 
 # personal virtualenvwrapper configuration file
 .virtualenvwrapper
+
+# sqlite db files
+*.db
