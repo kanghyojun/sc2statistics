@@ -8,7 +8,7 @@ from .util import url_for
 
 
 def test_replay_model(f_session):
-    rp = Replay(build=u'a', unit=u'a')
+    rp = Replay(build=u'a', unit=u'a', player=u'a')
     f_session.add(rp)
     f_session.commit()
     assert rp.id
@@ -22,8 +22,8 @@ def test_replay_model(f_session):
 
 
 def test_replay_primary_key(f_session):
-    rp = Replay(build=u'a', unit=u'a')
-    rp2 = Replay(build=u'a', unit=u'a')
+    rp = Replay(build=u'a', unit=u'a', player=u'a')
+    rp2 = Replay(build=u'a', unit=u'a', player=u'a')
     f_session.add(rp)
     f_session.add(rp2)
     f_session.commit()

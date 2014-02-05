@@ -28,3 +28,5 @@ class Replay(Base):
     build = Column(UnicodeText, nullable=False)
 
     unit = Column(UnicodeText, nullable=False)
+
+    player = Column(UnicodeText, nullable=False)
