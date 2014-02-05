@@ -42,8 +42,8 @@ def get_unit(replay_data, player_id=None):
 def get_player(replay_data):
     r = {}
     for item in replay_data['details']['m_playerList']:
-        r[item['m_teamId']] = {
-            'name': item['m_name'],
+        r[int(item['m_teamId']) + 1] = {
+            'name': item['m_name'].replace('<sp/>', ' '),
             'race': item['m_race'],
             'color': item['m_color'],
         }
