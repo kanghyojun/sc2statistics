@@ -22,7 +22,8 @@ def test_get_unit(f_replay_data):
 
 def test_get_player(f_replay_data):
     player = get_player(f_replay_data)
+    print player
     assert player
-    assert 'name' in player[0]
-    assert 'race' in player[0]
-    assert 'color' in player[0]
+    assert 'name' in player[1]
+    assert 'race' in player[1]
+    assert 'color' in player[1]
