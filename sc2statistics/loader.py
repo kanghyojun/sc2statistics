@@ -60,6 +60,8 @@ def load_replay(replay_name):
         r = protocol.decode_replay_tracker_events(contents)
         contents = archive.read_file('replay.details')
         detail = protocol.decode_replay_details(contents)
+#         contents = archive.read_file('replay.game.events')
+#         game_events = protocol.decode_replay_game_events(contents)
     except S2ProtocolNotFoundError as e:
         logger = get_logger()
         logger.error('s2protocol(%s) not found.'

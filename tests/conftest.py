@@ -12,7 +12,13 @@ from sc2web.web.app import app
 
 @fixture
 def f_replay_data():
-    n = list(load_all('./tests/assets'))[0]
+    n = './tests/assets/test_replay.SC2Replay'
+    return load_replay(n)
+
+
+@fixture
+def f_replay_data2():
+    n = './tests/assets/test_replay2.SC2Replay'
     return load_replay(n)
 
 
