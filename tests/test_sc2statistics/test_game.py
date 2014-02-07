@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from sc2statistics.game import get_build, get_unit, get_player
+from sc2statistics.game import get_build, get_unit, get_player, get_timeline
 
 
 def test_get_build(f_replay_data):
@@ -22,8 +22,17 @@ def test_get_unit(f_replay_data):
 
 def test_get_player(f_replay_data):
     player = get_player(f_replay_data)
-    print player
     assert player
     assert 'name' in player[1]
     assert 'race' in player[1]
     assert 'color' in player[1]
+
+
+def test_timeline(f_replay_data2):
+    timeline = get_timeline(f_replay_data2)
+    assert timeline
+    print timeline
+    for x in timeline:
+        if x['player_id'] == 1:
+            print x
+    assert False
