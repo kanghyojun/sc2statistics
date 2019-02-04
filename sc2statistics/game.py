@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
-from functools import wraps
+import functools
 
 from .env import UNIT
 
-__all__ ='get_build', 'get_unit', 'get_player', 'get_timeline',
+__all__ = 'get_build', 'get_unit', 'get_player', 'get_timeline'
 
 
 S2_TIME_CORR_VAL = 1/16.0
@@ -14,7 +13,7 @@ TRACKER_DIED_EVENT = 'NNet.Replay.Tracker.SUnitDiedEvent'
 
 def events(event_name, *events):
     def wrapper(f):
-        @wraps(f)
+        @functools.wraps(f)
         def deco(*args, **kwargs):
             d = args and args[0] or kwargs['replay_data']
             filtered = []
@@ -59,7 +58,7 @@ def get_player(replay_data):
 @events('tracker', TRACKER_INIT_EVENT, TRACKER_BORN_EVENT, TRACKER_DIED_EVENT)
 def get_timeline(replay_data, player_id=None):
     tag_index = {}
-    supply = [6 for x in xrange(8)]
+    supply = [6 for x in range(8)]
     for event in replay_data:
         t = event['_gameloop'] * S2_TIME_CORR_VAL
         event_name = 'init'

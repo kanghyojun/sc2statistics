@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
-from datetime import datetime
-from uuid import uuid4
+import datetime
+import uuid
 
 from sqlalchemy.types import TypeDecorator, Unicode, UnicodeText, Integer
 from sqlalchemy.schema import Column
@@ -9,14 +8,12 @@ from .db import Base
 
 
 def ordered_hash(length=20):
-    epoch = datetime.utcfromtimestamp(0)
-    now = datetime.now()
-    seconds = '%x' % (now - epoch).total_seconds()
-    random_string = uuid4().hex
+    epoch = datetime.datetime.utcfromtimestamp(0)
+    now = datetime.datetime.now()
+    seconds = hex((now - epoch).total_seconds())[2:]
+    random_string = uuid.uuid4().hex
     random_string_len = length - len(seconds)
-    postfix = random_string[random_string_len:]
-    id_ = seconds + postfix
-    return id_
+    return seconds + random_string[random_string_len:]
 
 
 class Replay(Base):

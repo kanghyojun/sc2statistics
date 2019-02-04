@@ -1,4 +1,2 @@
-# -*- coding: utf-8 -*-
-
-class S2ProtocolNotFoundError(Exception):
+class S2ProtocolNotFoundError(ValueError):
     pass

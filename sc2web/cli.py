@@ -1,17 +1,20 @@
 import os
 
-from alembic.command import branches as alembic_branch
-from alembic.command import current as alembic_current
-from alembic.command import downgrade as alembic_downgrade
-from alembic.command import history as alembic_history
-from alembic.command import revision as alembic_revision
-from alembic.command import upgrade as alembic_upgrade
+from alembic.command import (
+    branches as alembic_branch,
+    current as alembic_current,
+    downgrade as alembic_downgrade,
+    history as alembic_history,
+    revision as alembic_revision,
+    upgrade as alembic_upgrade,
+)
 from flask.ext.script import Manager, prompt_bool
 
-from .db import get_alembic_config, get_engine, Base
+from .db import get_alembic_config, get_engine
 from .web.app import app
 
 __all__ = 'main',
+
 
 @Manager
 def manager(config=None):
@@ -62,6 +65,7 @@ def branches():
     engine = get_engine()
     config, _ = get_alembic_config(engine)
     return alembic_branch(config)
+
 
 @manager.command
 def current():

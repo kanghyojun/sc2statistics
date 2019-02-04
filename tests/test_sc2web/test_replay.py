@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-from flask import json
-
-from sc2web.web.app import app
 from sc2web.replay import Replay
+from sc2web.web.app import app
 
 from .util import url_for
 

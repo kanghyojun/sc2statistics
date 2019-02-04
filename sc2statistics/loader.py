@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
-from os import walk, path
+import logging
+import os
 
 from mpyq import MPQArchive
-from s2protocol.versions import latest
+from s2protocol.versions import build, latest
 
 from .exceptions import S2ProtocolNotFoundError
 
@@ -11,26 +11,28 @@ __all__ = 'load_all', 'load_protocol', 'load_replay'
 
 
 def load_all(dir_):
-    for root, _, fnames in walk(dir_):
+    # FIXME use pathlib
+    for root, _, fnames in os.walk(dir_):
         for name in fnames:
             if name.endswith('SC2Replay'):
-                yield path.join(root, name)
+                yield os.path.join(root, name)
 
 
 def load_protocol(replay_name):
     """Get a replay decoder protocol.
+
     """
     archive = MPQArchive(replay_name)
     contents = archive.header['user_data_header']['content']
-    protocol = latest()
-    header = protocol.decode_replay_header(contents)
-    baseBuild = header['m_version']['m_baseBuild']
-    protocol_name = 'protocol%s' % baseBuild
+    latest_protocol = latest()
+    header = latest_protocol.decode_replay_header(contents)
+    build_version = header['m_version']['m_baseBuild']
     try:
-        protocol = __import__('s2protocol.%s' % protocol_name)
-    except:
-        raise S2ProtocolNotFoundError(protocol_name)
-    return archive, getattr(protocol, protocol_name)
+        protocol = build(build_version)
+    except ImportError:
+        raise S2ProtocolNotFoundError(build_version)
+    else:
+        return archive, protocol
 
 
 def load_replay(replay_name):
@@ -64,8 +66,7 @@ def load_replay(replay_name):
 #         contents = archive.read_file('replay.game.events')
 #         game_events = protocol.decode_replay_game_events(contents)
     except S2ProtocolNotFoundError as e:
-        logger = get_logger()
-        logger.error('s2protocol(%s) not found.'
-                     'check out version of s2protocol.' % e.message)
+        logging.error('s2protocol(%s) not found.'
+                      'check out version of s2protocol.', e.message)
         raise
     return {'tracker_events': tuple(r), 'details': detail}
