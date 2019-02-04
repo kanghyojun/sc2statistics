@@ -2,13 +2,13 @@
 from os import walk, path
 
 from mpyq import MPQArchive
-from s2protocol import protocol15405
+from s2protocol.versions import latest
 
 from .exceptions import S2ProtocolNotFoundError
-from .loging import get_logger
 
 
-__all__ = 'load_all', 'load_protocol', 'load_replay',
+__all__ = 'load_all', 'load_protocol', 'load_replay'
+
 
 def load_all(dir_):
     for root, _, fnames in walk(dir_):
@@ -22,7 +22,8 @@ def load_protocol(replay_name):
     """
     archive = MPQArchive(replay_name)
     contents = archive.header['user_data_header']['content']
-    header = protocol15405.decode_replay_header(contents)
+    protocol = latest()
+    header = protocol.decode_replay_header(contents)
     baseBuild = header['m_version']['m_baseBuild']
     protocol_name = 'protocol%s' % baseBuild
     try:

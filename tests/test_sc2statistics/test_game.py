@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from sc2statistics.game import get_build, get_unit, get_player, get_timeline
 
 
@@ -31,8 +30,8 @@ def test_get_player(f_replay_data):
 def test_timeline(f_replay_data2):
     timeline = get_timeline(f_replay_data2)
     assert timeline
-    print timeline
+    print(timeline)
     for x in timeline:
         if x['player_id'] == 1:
-            print x
+            print(x)
     assert False
