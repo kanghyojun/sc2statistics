@@ -1,18 +1,17 @@
-# -*- coding -*-: utf-8
 import os
 
-from flask.ext.script import Manager, prompt_bool
-from alembic.command import revision as alembic_revision
-from alembic.command import upgrade as alembic_upgrade
-from alembic.command import downgrade as alembic_downgrade
-from alembic.command import history as alembic_history
 from alembic.command import branches as alembic_branch
 from alembic.command import current as alembic_current
+from alembic.command import downgrade as alembic_downgrade
+from alembic.command import history as alembic_history
+from alembic.command import revision as alembic_revision
+from alembic.command import upgrade as alembic_upgrade
+from flask.ext.script import Manager, prompt_bool
 
-from sc2web.db import get_alembic_config, get_engine, Base
-from sc2web.web.app import app
+from .db import get_alembic_config, get_engine, Base
+from .web.app import app
 
-__all__ = 'manager', 'run'
+__all__ = 'main',
 
 @Manager
 def manager(config=None):
@@ -74,5 +73,6 @@ def current():
 
 manager.add_option('-c', '--config', dest='config', required=True)
 
-if __name__ == '__main__':
+
+def main():
     manager.run()

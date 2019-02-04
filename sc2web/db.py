@@ -1,17 +1,18 @@
-# -*- coding: utf-8 -*-
-from flask import current_app, g
 from alembic.config import Config
 from alembic.script import ScriptDirectory
-from werkzeug.local import LocalProxy
+from flask import current_app, g
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from werkzeug.local import LocalProxy
 
 __all__ = ('Base', 'ensure_shutdown_session', 'get_engine', 'get_session',
            'get_alembic_config')
 
+
 Base = declarative_base()
 Session = sessionmaker()
+
 
 def get_alembic_config(engine):
     if engine is not None:
@@ -48,5 +49,6 @@ def get_session(engine=None):
     if not hasattr(g, 'sess'):
         setattr(g, 'sess', Session(bind=engine))
     return getattr(g, 'sess')
+
 
 session = LocalProxy(get_session)
