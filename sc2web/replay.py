@@ -1,8 +1,8 @@
 import datetime
 import uuid
 
-from sqlalchemy.types import TypeDecorator, Unicode, UnicodeText, Integer
 from sqlalchemy.schema import Column
+from sqlalchemy.types import Unicode, UnicodeText
 
 from .db import Base
 
@@ -20,6 +20,7 @@ class Replay(Base):
 
     __tablename__ = 'replays'
 
+    # FIXME The type of id need to be changed to `Binary`.
     id = Column(Unicode, primary_key=True, default=ordered_hash)
 
     build = Column(UnicodeText, nullable=False)

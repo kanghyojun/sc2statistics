@@ -7,11 +7,11 @@ from .util import url_for
 
 def test_upload_replay(f_replay, f_session):
     url = url_for('analyze_replays')
-    with app.test_client() as c, f_replay as f:
+    with app.test_client() as c:
         r = c.post(
                 url,
                 content_type='multipart/form-data',
-                data={'replay': f})
+                data={'replay': f_replay})
     assert 302 == r.status_code
     loc = r.headers.get('Location', None)
     assert loc

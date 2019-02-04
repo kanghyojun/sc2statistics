@@ -1,12 +1,9 @@
-# -*- coding: utf-8 -*-
-from contextlib import contextmanager
-
 from flask import g
 from pytest import fixture
 from sqlalchemy.orm import sessionmaker
 
 from sc2statistics.loader import load_all, load_replay
-from sc2web.db import get_engine, Base, get_session
+from sc2web.db import Base, get_engine
 from sc2web.web.app import app
 
 
@@ -23,7 +20,6 @@ def f_replay_data2():
 
 
 @fixture
-@contextmanager
 def f_replay():
     n = list(load_all('./tests/assets'))[0]
     with open(n, 'rb') as f:
@@ -40,6 +36,7 @@ def f_session(request):
         ctx_.push()
         session = Session(bind=engine)
         setattr(g, 'sess', session)
+
         def finish():
             session.close()
             Base.metadata.drop_all(engine)

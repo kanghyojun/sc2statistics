@@ -1,17 +1,16 @@
-# -*- coding: utf-8 -*-
-from itertools import groupby
+import itertools
+import json
 
-from flask import (Flask, request, jsonify, render_template, redirect,
-                   url_for, json, abort)
+from flask import Flask, abort, redirect, render_template, request, url_for
 from sqlalchemy.exc import IntegrityError
 
-from sc2statistics.loader import load_replay
-from sc2statistics.game import get_build, get_player, get_unit
-
-from ..db import session, ensure_shutdown_session
+from ..db import ensure_shutdown_session, session
 from ..replay import Replay
+from sc2statistics.game import get_build, get_player, get_unit
+from sc2statistics.loader import load_replay
 
 
+__all__ = 'app',
 app = Flask(__name__)
 
 
@@ -52,15 +51,20 @@ def get_analyzed_replay(replay_id):
     if not replay:
         abort(404)
     try:
+        # FIXME Change the type.
         build = json.loads(replay.build)
-        unit = json.loads(replay.unit)
         player = json.loads(replay.player)
-    except:
+    except (ValueError, TypeError):
         abort(500)
-    build_by_player = groupby(sorted(build, key=lambda x: x['player_id']),
-                              key=lambda x: x['player_id'])
+
+    def find_player_id(item):
+        return item['player_id']
+
+    build_by_player = itertools.groupby(sorted(build, key=find_player_id),
+                                        key=find_player_id)
     return render_template('view_build.html',
                            player=player, build=build_by_player)
 
 
+# FIXME
 ensure_shutdown_session(app)

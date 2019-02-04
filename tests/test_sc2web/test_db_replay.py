@@ -1,10 +1,4 @@
-# -*- coding: utf-8 -*-
-from flask import json
-
-from sc2web.web.app import app
 from sc2web.replay import Replay
-
-from .util import url_for
 
 
 def test_replay_model(f_session):
@@ -12,9 +6,9 @@ def test_replay_model(f_session):
     f_session.add(rp)
     f_session.commit()
     assert rp.id
-    rp2 = f_session.query(Replay)\
-          .filter(Replay.id == rp.id)\
-          .first()
+    rp2 = f_session.query(Replay) \
+        .filter(Replay.id == rp.id) \
+        .first()
     assert rp2
     assert rp.id == rp2.id
     assert rp.build == rp2.build

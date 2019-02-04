@@ -1,4 +1,4 @@
-from sc2statistics.game import get_build, get_unit, get_player, get_timeline
+from sc2statistics.game import get_build, get_player, get_timeline, get_unit
 
 
 def test_get_build(f_replay_data):
